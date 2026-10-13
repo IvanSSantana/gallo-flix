@@ -1,1 +1,81 @@
-<p>details works!</p>
+<div class="container mt-5 p-5">
+  @if (media(); as item) {
+    <div class="row">
+      <div class="col-md-4">
+        <img
+          class="w-100 rounded-5 poster"
+          [src]="item.poster_path ? 'https://image.tmdb.org/t/p/w500/' + item.poster_path : '/img/no-poster.png'"
+          [alt]="item.title ?? item.name ?? 'Poster'">
+      </div>
+      <div class="col-md-8 text-white" id="detalhes">
+        <h1 class="fs-1 text-danger">{{ item.title ?? item.name }}</h1>
+        <h4 class="mb-4 fw-bold">Título Original: {{ item.original_title ?? item.original_name }}</h4>
+        <p class="mb-3">Data de Estreia: {{ (item.release_date ?? item.last_air_date) | date: 'dd/MM/yyyy' }}</p>
+        <p class="mb-3">País de Origem: {{ item.origin_country?.join(', ') }}</p>
+        <p class="mb-3">Popularidade: {{ item.popularity.toFixed(1) }}</p>
+        <p class="mb-3">Status: {{ item.status }}</p>
+        <p class="mb-3">{{ item.overview }}</p>
+        @for (genre of item.genres; track genre.id) {
+          <button class="btn btn-lg btn-outline-danger me-2">{{ genre.name }}</button>
+        }
+      </div>
+    </div>
+  }
+
+  <div class="row my-5 text-white" id="trailer">
+    <h3 class="my-3">Vídeos</h3>
+    @if (trailers().length === 0) {
+      <div class="col">
+        <h3 class="text-center my-5">Sem trailers disponíveis</h3>
+      </div>
+    } @else {
+      <div id="carouselTrailer" class="carousel slide">
+        <div class="carousel-inner">
+          @for (trailer of trailers(); track trailer.id; let first = $first) {
+            <div class="carousel-item" [class.active]="first">
+              <iframe
+                class="rounded-5 d-block w-100"
+                width="100%"
+                height="500"
+                [src]="trailer.safeUrl"
+                [title]="trailer.name"
+                allowfullscreen>
+              </iframe>
+              <div class="carousel-caption d-none d-md-block">
+                <h5 class="mb-0">{{ trailer.name }} - Publicado em: {{ trailer.published_at | date: 'dd/MM/yyyy' }}</h5>
+              </div>
+            </div>
+          }
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselTrailer" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselTrailer" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Próximo</span>
+        </button>
+      </div>
+    }
+  </div>
+
+  <div class="row my-5 text-white">
+    <h3 class="my-5">Elenco</h3>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3" id="elenco">
+      @for (member of cast(); track member.id) {
+        <div class="col">
+          <div id="person" class="card" [routerLink]="['/person', member.id]">
+            <img
+              class="card-img-top"
+              [alt]="member.original_name"
+              [src]="member.profile_path ? 'https://image.tmdb.org/t/p/w500/' + member.profile_path : '/img/no-photo-cast.png'">
+            <div class="card-body text-center">
+              <h5 class="card-title">{{ member.original_name }}</h5>
+              <p class="card-text">{{ member.character }}</p>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

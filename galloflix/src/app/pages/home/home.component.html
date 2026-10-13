@@ -1,0 +1,68 @@
+<div class="container-fluid p-0">
+  <div id="carouselBanner" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      @for (banner of bannerResults(); track banner.id; let first = $first) {
+        <div class="carousel-item" data-bs-interval="8000" [class.active]="first">
+          <img
+            [src]="'https://image.tmdb.org/t/p/original/' + banner.backdrop_path"
+            class="d-block w-100 opacity-75"
+            [alt]="banner.title ?? banner.name ?? 'Capa da mídia'"
+            [routerLink]="['/details', banner.media_type, banner.id]">
+          <div class="carousel-caption">
+            <h3>{{ banner.title ?? banner.name }}</h3>
+            <p class="d-none d-md-block">{{ banner.overview }}</p>
+          </div>
+        </div>
+      }
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselBanner" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselBanner" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Próximo</span>
+    </button>
+  </div>
+</div>
+
+<div class="container my-5">
+  <div class="row">
+    <h4 class="text-white">Filmes em Destaque</h4>
+    <div class="rowposter mt-1" autoScroll>
+      @for (movie of trendingMovieResults(); track movie.id) {
+        <a [routerLink]="['/details', 'movie', movie.id]">
+          <img
+            [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
+            [alt]="movie.title ?? 'Capa do filme'">
+        </a>
+      }
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <h4 class="text-white">Séries em Destaque</h4>
+    <div class="rowposter mt-1" autoScroll>
+      @for (serie of trendingSerieResults(); track serie.id) {
+        <a [routerLink]="['/details', 'tv', serie.id]">
+          <img
+            [src]="'https://image.tmdb.org/t/p/w500/' + serie.poster_path"
+            [alt]="serie.name ?? 'Capa da série'">
+        </a>
+      }
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <h4 class="text-white">Filmes Populares de Ação</h4>
+    <div class="rowposter mt-1" autoScroll>
+      @for (movie of popularActionMovieResults(); track movie.id) {
+        <a [routerLink]="['/details', 'movie', movie.id]">
+          <img
+            [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
+            [alt]="movie.title ?? 'Capa do filme'">
+        </a>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="container mt-5 p-5">
+  @if (person(); as item) {
+    <div class="row">
+      <div class="col-md-3">
+        <img
+          class="w-100 rounded-5 poster"
+          [src]="item.profile_path ? 'https://image.tmdb.org/t/p/w500/' + item.profile_path : '/img/no-photo-cast.png'"
+          [alt]="item.name">
+      </div>
+      <div class="col-md-9 text-white" id="detalhes">
+        <h1 class="fs-1 text-danger">{{ item.name }}</h1>
+        <h4 class="mb-4">Nascimento: {{ item.place_of_birth ?? 'Não informado' }}</h4>
+        <h4 class="mb-4">Data de Nascimento: {{ item.birthday | date: 'dd/MM/yyyy' }}</h4>
+        <p class="mb-3">{{ item.biography || 'Biografia não disponível' }}</p>
+      </div>
+    </div>
+  }
+</div>
