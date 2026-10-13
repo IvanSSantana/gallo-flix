@@ -1,0 +1,46 @@
+#pesquisar input {
+    padding: 15px 20px;
+    font-weight: 600;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50px;
+    border: #E50914 solid 2px;
+    font-size: 18px;
+    width: 100%;
+}
+
+#pesquisar button {
+    padding: 12px;
+    top: 1px;
+    right: 0;
+    border-radius: 50%;
+    width: 60px;
+    font-size: 20px;
+    background-color: #E50914;
+    color: white;
+    border: #E50914 solid 2px;
+}
+
+.card {
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.card-img-top {
+  height: 300px;
+  object-fit: cover;
+  width: 100%;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.card-title {
+    font-size: 16px;
+    padding: 0 5px;
+    display: flex;
+    height: 70px;
+    align-items: center;
+    justify-content: center;
+}

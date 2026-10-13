@@ -1,0 +1,52 @@
+<div class="container my-5 py-5 px-lg-5 px-3">
+  <form id="pesquisar" class="d-flex position-relative" (ngSubmit)="onSearch()">
+    <input
+      type="search"
+      placeholder="Pesquisar..."
+      name="search"
+      autocomplete="off"
+      [ngModel]="searchQuery()"
+      (ngModelChange)="searchQuery.set($event)">
+    <button type="submit" class="position-absolute" aria-label="Pesquisar">
+      <i class="bi bi-search"></i>
+    </button>
+  </form>
+
+  @if (hasSearched()) {
+    <h5 id="qtdeResultados" class="text-white my-4">
+      Resultados Encontrados ({{ totalResults() }})
+    </h5>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+      @for (item of resultsList(); track item.id) {
+        <div class="col">
+          <a [routerLink]="['/details', item.media_type, item.id]" class="text-decoration-none">
+            <div id="person" class="card">
+              <img
+                class="card-img-top"
+                [alt]="item.title ?? item.name ?? 'Capa da mídia'"
+                [src]="item.poster_path ? 'https://image.tmdb.org/t/p/w500/' + item.poster_path : '/img/no-poster.png'">
+              <div class="card-body text-center">
+                <h5 class="card-title">{{ item.title ?? item.name }}</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+      } @empty {
+        <div class="col-12 text-center text-white py-5">
+          Nenhum resultado encontrado.
+        </div>
+      }
+    </div>
+  }
+
+  @if (currentPage() < totalPages()) {
+    <div class="row">
+      <div class="col-12 text-center mt-5">
+        <button class="btn btn-lg px-5 btn-danger text-white rounded-5" type="button" (click)="loadMore()">
+          Exibir mais
+        </button>
+      </div>
+    </div>
+  }
+</div>
